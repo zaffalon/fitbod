@@ -1,0 +1,71 @@
+version: '3'
+      
+volumes:
+  redis:
+  db:
+  cache:
+  data01:
+    driver: local
+
+services:
+  postgresql:
+    image: postgres:12.3-alpine
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - elastic
+
+  redis:
+    image: 'redis:5.0-alpine'
+    hostname: redis
+    container_name: redis
+    command: 'redis-server'
+    sysctls:
+      net.core.somaxconn: 1024
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis:/data'
+    networks:
+      - elastic
+
+  api:
+    depends_on:
+      - 'postgresql'
+      - 'redis'
+    build: .
+    command: /bin/bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b 0.0.0.0"
+    stdin_open: true
+    tty: true
+    volumes:
+      - '.:/app'
+      - cache:/cache
+      - "/etc/localtime:/etc/localtime"
+    ports:
+      - "80:3000"
+    networks:
+      - elastic
+    env_file:
+      - '.env.docker'
+
+  sidekiq:
+    depends_on:
+      - 'api'
+    build: .
+    container_name: sidekiq
+    command: 'bundle exec sidekiq -C config/sidekiq.yml'
+    networks:
+      - elastic
+    volumes:
+      - '.:/app'
+    env_file:
+      - '.env.docker'
+  
+networks:
+  elastic:
+    driver: bridge

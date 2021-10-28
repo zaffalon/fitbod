@@ -1,0 +1,18 @@
+development:
+  adapter: postgresql
+  database: fitbod_development
+  timeout: 5000
+  username: postgres
+  password: postgres
+  pool: 20
+  host: postgresql
+  port: 5432
+
+test:
+  adapter: postgresql
+  database: fitbod_test
+  timeout: 5000
+  username: postgres
+  password: postgres
+  host: postgresql
+  port: 5432
