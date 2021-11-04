@@ -256,13 +256,12 @@ paths:
       responses:
         '204':
           description: OK
-components:
-  securitySchemes:
-    JWT:
-      description: 'Example: ''Bearer xxx.yyy.zzz'''
-      type: apiKey
-      name: Authorization
-      in: header
+securityDefinitions:
+  JWT:
+    description: 'Example: ''Bearer xxx.yyy.zzz'''
+    type: apiKey
+    name: Authorization
+    in: header
 servers:
 - url: https://{defaultHost}
   variables:

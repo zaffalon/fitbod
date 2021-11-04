@@ -22,8 +22,7 @@ RSpec.configure do |config|
         version: "v1",
       },
       paths: {},
-      components: {
-        securitySchemes: {
+      securityDefinitions: {
           JWT: {
             description: "Example: 'Bearer xxx.yyy.zzz'",
             type: :apiKey,
@@ -31,7 +30,7 @@ RSpec.configure do |config|
             in: :header,
           },
         },
-      },
+    
       servers: [
         {
           url: "https://{defaultHost}",
