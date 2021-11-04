@@ -10,13 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_27_230240) do
+ActiveRecord::Schema.define(version: 2021_10_28_032303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "users", force: :cascade do |t|
+  create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.string "token", null: false
+    t.datetime "expiry_at"
+    t.datetime "last_request_at"
+    t.text "user_agent"
+    t.string "create_ip"
+    t.string "last_request_ip"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["expiry_at"], name: "index_sessions_on_expiry_at"
+    t.index ["token"], name: "index_sessions_on_token"
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -29,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_10_27_230240) do
   end
 
   create_table "workouts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.bigint "user_id"
+    t.uuid "user_id"
     t.datetime "workout_at"
     t.integer "duration"
     t.datetime "created_at", precision: 6, null: false
