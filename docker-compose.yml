@@ -23,7 +23,6 @@ services:
   redis:
     image: 'redis:5.0-alpine'
     hostname: redis
-    container_name: redis
     command: 'redis-server'
     sysctls:
       net.core.somaxconn: 1024
