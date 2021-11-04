@@ -5,6 +5,7 @@ RSpec.describe "users", type: :request do
 
   path "/users" do
     post "create user" do
+      tags "Users"
       parameter name: "Content-Type", default: "application/json", :in => :header, required: true
 
       parameter name: :request_body, in: :body, schema: {
@@ -68,6 +69,7 @@ RSpec.describe "users", type: :request do
     let!(:Authorization) { api_key }
 
     patch "update user" do
+      tags "Users"
       security [JWT: []]
       parameter name: "Content-Type", default: "application/json", :in => :header, required: true
       parameter name: "id", in: :path, type: :string, description: "id"
@@ -117,6 +119,7 @@ RSpec.describe "users", type: :request do
     end
 
     get "show user" do
+      tags "Users"
       security [JWT: []]
       parameter name: "Content-Type", default: "application/json", :in => :header, required: true
       parameter name: "id", in: :path, type: :string, description: "id"

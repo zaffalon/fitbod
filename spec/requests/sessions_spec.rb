@@ -8,6 +8,7 @@ RSpec.describe "sessions", type: :request do
 
   path "/sessions" do
     post "create session" do
+      tags "Sessions"
       parameter name: "Content-Type", default: "application/json", :in => :header, required: true
 
       parameter name: :request_body, in: :body, schema: {

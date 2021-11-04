@@ -8,6 +8,7 @@ RSpec.describe "workouts", type: :request do
 
   path "/workouts" do
     get "list workouts" do
+      tags "Workouts"
       let!(:workout) { Workout.make!(user: user) }
 
       security [JWT: []]
@@ -47,10 +48,11 @@ RSpec.describe "workouts", type: :request do
     end
 
     post "create workout" do
+      tags "Workouts"
       security [JWT: []]
       parameter name: "Content-Type", default: "application/json", :in => :header, required: true
 
-      parameter name: :request_body, in: :body, schema: {
+      parameter name: :request_body, in: :body,  required: true, schema: {
         type: :object,
         properties: {
           duration: {
@@ -107,6 +109,7 @@ RSpec.describe "workouts", type: :request do
     let!(:id) { workout.id }
 
     get "show workout" do
+      tags "Workouts"
       security [JWT: []]
       parameter name: "Content-Type", default: "application/json", :in => :header, required: true
       parameter name: "id", in: :path, type: :string, description: "id"
@@ -125,6 +128,7 @@ RSpec.describe "workouts", type: :request do
     end
 
     patch "update workout" do
+      tags "Workouts"
       security [JWT: []]
       parameter name: "Content-Type", default: "application/json", :in => :header, required: true
       parameter name: "id", in: :path, type: :string, description: "id"
@@ -171,6 +175,7 @@ RSpec.describe "workouts", type: :request do
     end
 
     delete "delete workout" do
+      tags "Workouts"
       security [JWT: []]
       parameter name: "Content-Type", default: "application/json", :in => :header, required: true
       parameter name: "id", in: :path, type: :string, description: "id"

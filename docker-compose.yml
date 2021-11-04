@@ -51,19 +51,6 @@ services:
       - elastic
     env_file:
       - '.env.docker'
-
-  sidekiq:
-    depends_on:
-      - 'api'
-    build: .
-    container_name: sidekiq
-    command: 'bundle exec sidekiq -C config/sidekiq.yml'
-    networks:
-      - elastic
-    volumes:
-      - '.:/app'
-    env_file:
-      - '.env.docker'
   
 networks:
   elastic:

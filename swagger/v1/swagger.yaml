@@ -1,0 +1,270 @@
+---
+swagger: '2.0'
+info:
+  title: API V1
+  version: v1
+paths:
+  "/sessions":
+    post:
+      summary: create session
+      tags:
+      - Sessions
+      parameters:
+      - name: Content-Type
+        default: application/json
+        in: header
+        required: true
+      - name: request_body
+        in: body
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              description: The user email
+              example: fitbod@example.com
+              required: true
+            password:
+              type: string
+              description: The user password
+              example: '12345678'
+              required: true
+      responses:
+        '201':
+          description: Created
+        '422':
+          description: Unprocessable Entity
+  "/users":
+    post:
+      summary: create user
+      tags:
+      - Users
+      parameters:
+      - name: Content-Type
+        default: application/json
+        in: header
+        required: true
+      - name: request_body
+        in: body
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              description: The user email
+              example: fitbod@example.com
+              required: true
+            password:
+              type: string
+              description: The user password
+              example: '12345678'
+              required: true
+            password_confirmation:
+              type: string
+              description: The user password confirmation
+              example: '12345678'
+              required: true
+      responses:
+        '201':
+          description: Created
+        '422':
+          description: Unprocessable Entity
+  "/users/{id}":
+    patch:
+      summary: update user
+      tags:
+      - Users
+      security:
+      - JWT: []
+      parameters:
+      - name: Content-Type
+        default: application/json
+        in: header
+        required: true
+      - name: id
+        in: path
+        type: string
+        description: id
+        required: true
+      - name: request_body
+        in: body
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              description: The user email
+              example: fitbod@example.com
+              required: true
+            password:
+              type: string
+              description: The user password
+              example: '12345678'
+              required: true
+            password_confirmation:
+              type: string
+              description: The user password confirmation
+              example: '12345678'
+              required: true
+      responses:
+        '200':
+          description: OK
+    get:
+      summary: show user
+      tags:
+      - Users
+      security:
+      - JWT: []
+      parameters:
+      - name: Content-Type
+        default: application/json
+        in: header
+        required: true
+      - name: id
+        in: path
+        type: string
+        description: id
+        required: true
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unathorized
+  "/workouts":
+    get:
+      summary: list workouts
+      tags:
+      - Workouts
+      security:
+      - JWT: []
+      parameters:
+      - name: Content-Type
+        default: application/json
+        in: header
+        required: true
+      - name: last_updated_at
+        in: query
+        type: datetime
+        description: Used to polling API for the last workouts, pass the last created_at
+          persisted with API in local storage
+        required: false
+      responses:
+        '200':
+          description: Return last workouts created
+    post:
+      summary: create workout
+      tags:
+      - Workouts
+      security:
+      - JWT: []
+      parameters:
+      - name: Content-Type
+        default: application/json
+        in: header
+        required: true
+      - name: request_body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            duration:
+              type: integer
+              description: The total duration in minutes
+              example: '45'
+              required: true
+            workout_at:
+              type: datetime
+              description: The datetime that workout begins
+              example: '2021-10-01 20:00:00'
+              required: true
+      responses:
+        '201':
+          description: Created
+        '422':
+          description: Unprocessable Entity
+  "/workouts/{id}":
+    get:
+      summary: show workout
+      tags:
+      - Workouts
+      security:
+      - JWT: []
+      parameters:
+      - name: Content-Type
+        default: application/json
+        in: header
+        required: true
+      - name: id
+        in: path
+        type: string
+        description: id
+        required: true
+      responses:
+        '200':
+          description: OK
+    patch:
+      summary: update workout
+      tags:
+      - Workouts
+      security:
+      - JWT: []
+      parameters:
+      - name: Content-Type
+        default: application/json
+        in: header
+        required: true
+      - name: id
+        in: path
+        type: string
+        description: id
+        required: true
+      - name: request_body
+        in: body
+        schema:
+          type: object
+          properties:
+            duration:
+              type: integer
+              description: The total duration in minutes
+              example: '45'
+              required: true
+            workout_at:
+              type: datetime
+              description: The datetime that workout begins
+              example: '2021-10-01 20:00:00'
+              required: true
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: delete workout
+      tags:
+      - Workouts
+      security:
+      - JWT: []
+      parameters:
+      - name: Content-Type
+        default: application/json
+        in: header
+        required: true
+      - name: id
+        in: path
+        type: string
+        description: id
+        required: true
+      responses:
+        '204':
+          description: OK
+components:
+  securitySchemes:
+    JWT:
+      description: 'Example: ''Bearer xxx.yyy.zzz'''
+      type: apiKey
+      name: Authorization
+      in: header
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
