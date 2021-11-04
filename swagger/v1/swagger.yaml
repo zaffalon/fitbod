@@ -27,7 +27,7 @@ paths:
             password:
               type: string
               description: The user password
-              example: '12345678'
+              example: '123456'
               required: true
       responses:
         '201':
@@ -57,12 +57,12 @@ paths:
             password:
               type: string
               description: The user password
-              example: '12345678'
+              example: '123456'
               required: true
             password_confirmation:
               type: string
               description: The user password confirmation
-              example: '12345678'
+              example: '123456'
               required: true
       responses:
         '201':
@@ -99,12 +99,12 @@ paths:
             password:
               type: string
               description: The user password
-              example: '12345678'
+              example: '123456'
               required: true
             password_confirmation:
               type: string
               description: The user password confirmation
-              example: '12345678'
+              example: '123456'
               required: true
       responses:
         '200':
@@ -144,7 +144,7 @@ paths:
         required: true
       - name: last_updated_at
         in: query
-        type: datetime
+        type: string
         description: Used to polling API for the last workouts, pass the last created_at
           persisted with API in local storage
         required: false
@@ -174,7 +174,7 @@ paths:
               example: '45'
               required: true
             workout_at:
-              type: datetime
+              type: string
               description: The datetime that workout begins
               example: '2021-10-01 20:00:00'
               required: true
@@ -230,7 +230,7 @@ paths:
               example: '45'
               required: true
             workout_at:
-              type: datetime
+              type: string
               description: The datetime that workout begins
               example: '2021-10-01 20:00:00'
               required: true
