@@ -43,8 +43,8 @@ RSpec.describe "users", type: :request do
       response "201", "Created" do
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to_not be_empty
-          expect(data).to include(
+          expect(data["data"]).to_not be_empty
+          expect(data["data"]["attributes"]).to include(
             "email" => "fitbod@example.com",
           )
         end
@@ -110,8 +110,8 @@ RSpec.describe "users", type: :request do
         let(:id) { user.id }
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to_not be_empty
-          expect(data).to include(
+          expect(data["data"]).to_not be_empty
+          expect(data["data"]["attributes"]).to include(
             "email" => "fitbod2@example.com",
           )
         end
@@ -128,8 +128,8 @@ RSpec.describe "users", type: :request do
         let(:id) { user.id }
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to_not be_empty
-          expect(data).to include(
+          expect(data["data"]).to_not be_empty
+          expect(data["data"]["attributes"]).to include(
             "email" => "fitbod@example.com",
           )
         end

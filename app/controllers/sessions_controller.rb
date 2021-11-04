@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
         )
     
 
-        render json: { token: session.token }, status: :created
+        render json: { access_token: session.token, token_type: "Bearer", expires_in: Session::TTL }, status: :created
       else
         render json: { message: "invalid_login", code: "invalid_login" }, status: :unprocessable_entity
       end

@@ -4,7 +4,7 @@ class WorkoutsController < ApplicationController
 
   def create
     if @workout.save
-      render json: @workout, status: :created
+      render json: WorkoutSerializer.new(@workout), status: :created
     else
       render json: @workout.errors, status: :unprocessable_entity
     end
@@ -12,11 +12,11 @@ class WorkoutsController < ApplicationController
 
   def index
     @workouts = @workouts.where("created_at >= :last_updated_at", last_updated_at: params[:last_updated_at]) if params[:last_updated_at]
-    render json: @workouts
+    render json: WorkoutSerializer.new(@workouts)
   end
 
   def show
-    render json: @workout
+    render json: WorkoutSerializer.new(@workout)
   end
 
   def destroy
@@ -27,7 +27,7 @@ class WorkoutsController < ApplicationController
 
   def update
     if @workout.update(workout_params)
-      render json: @workout
+      render json: WorkoutSerializer.new(@workout)
     end
   end
 

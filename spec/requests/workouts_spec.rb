@@ -19,8 +19,8 @@ RSpec.describe "workouts", type: :request do
       response "200", "Workouts returned successfully" do
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to include(hash_including("id" => workout.id, "duration" => workout.duration))
-          expect(data.size).to eq(1)
+          expect(data["data"]).to include(hash_including("id" => workout.id))
+          expect(data["data"].count).to eq(1)
         end
       end
 
@@ -28,7 +28,7 @@ RSpec.describe "workouts", type: :request do
         let(:last_updated_at) { workout.created_at + 1.minutes }
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to be_empty
+          expect(data["data"]).to be_empty
         end
       end
 
@@ -40,9 +40,9 @@ RSpec.describe "workouts", type: :request do
         let(:last_updated_at) { workout.created_at + 1.minutes }
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data.size).to eq(2)
-          expect(data).to include(hash_including("id" => workout1.id, "duration" => workout.duration))
-          expect(data).to include(hash_including("id" => workout2.id, "duration" => workout.duration))
+          expect(data["data"].size).to eq(2)
+          expect(data["data"]).to include(hash_including("id" => workout1.id))
+          expect(data["data"]).to include(hash_including("id" => workout2.id))
         end
       end
     end
@@ -82,13 +82,13 @@ RSpec.describe "workouts", type: :request do
       response "201", "Created" do
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to_not be_empty
-          expect(data).to include(
-            "id" => anything,
+          expect(data["data"]).to_not be_empty
+          expect(data["data"]).to include("id" => anything)
+          expect(data["data"]["attributes"]).to include(
             "duration" => 45,
             "workout_at" => anything,
           )
-          expect(data["workout_at"].to_datetime.to_i).to eq(current_time.to_i)
+          expect(data["data"]["attributes"]["workout_at"].to_datetime.to_i).to eq(current_time.to_i)
         end
       end
 
@@ -117,9 +117,9 @@ RSpec.describe "workouts", type: :request do
       response "200", "OK" do
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to_not be_empty
-          expect(data).to include(
-            "id" => workout.id,
+          expect(data["data"]).to_not be_empty
+          expect(data["data"]).to include("id" => workout.id)
+          expect(data["data"]["attributes"]).to include(
             "duration" => workout.duration,
             "workout_at" => anything,
           )
@@ -163,13 +163,13 @@ RSpec.describe "workouts", type: :request do
       response "200", "OK" do
         run_test! do |response|
           data = JSON.parse(response.body)
-          expect(data).to_not be_empty
-          expect(data).to include(
-            "id" => workout.id,
+          expect(data["data"]).to_not be_empty
+          expect(data["data"]).to include("id" => workout.id)
+          expect(data["data"]["attributes"]).to include(
             "duration" => 50,
             "workout_at" => anything,
           )
-          expect(data["workout_at"].to_datetime.to_i).to eq(current_time.to_i)
+          expect(data["data"]["attributes"]["workout_at"].to_datetime.to_i).to eq(current_time.to_i)
         end
       end
     end

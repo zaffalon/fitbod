@@ -41,7 +41,7 @@ RSpec.describe "sessions", type: :request do
           data = JSON.parse(response.body)
           expect(data).to_not be_empty
           expect(data).to include(
-            "token" => anything,
+            "access_token" => anything,
           )
         end
       end

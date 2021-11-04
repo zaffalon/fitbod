@@ -52,6 +52,8 @@ gem 'cancancan'
 gem 'rswag-api'
 gem 'rswag-ui'
 
+gem 'jsonapi-serializer'
+
 group :test do
   # Test fixtures
   gem 'machinist_redux'
