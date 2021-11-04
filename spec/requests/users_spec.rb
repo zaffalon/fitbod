@@ -20,13 +20,13 @@ RSpec.describe "users", type: :request do
           password: {
             type: :string,
             description: "The user password",
-            example: "12345678",
+            example: "123456",
             required: true,
           },
           password_confirmation: {
             type: :string,
             description: "The user password confirmation",
-            example: "12345678",
+            example: "123456",
             required: true,
           },
         },
@@ -86,13 +86,13 @@ RSpec.describe "users", type: :request do
           password: {
             type: :string,
             description: "The user password",
-            example: "12345678",
+            example: "123456",
             required: true,
           },
           password_confirmation: {
             type: :string,
             description: "The user password confirmation",
-            example: "12345678",
+            example: "123456",
             required: true,
           },
         },

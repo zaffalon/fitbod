@@ -23,7 +23,7 @@ RSpec.describe "sessions", type: :request do
           password: {
             type: :string,
             description: "The user password",
-            example: "12345678",
+            example: "123456",
             required: true,
           },
         },

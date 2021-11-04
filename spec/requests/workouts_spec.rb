@@ -1,7 +1,7 @@
 require "swagger_helper"
 
 RSpec.describe "workouts", type: :request do
-  let(:'Content-Type') { "application/json" }
+  let!(:'Content-Type') { "application/json" }
   let!(:user) { User.make! }
   let!(:api_key) { "Bearer #{Session.make!(user: user).token}" }
   let!(:Authorization) { api_key }
@@ -14,7 +14,7 @@ RSpec.describe "workouts", type: :request do
       security [JWT: []]
       parameter name: "Content-Type", default: "application/json", :in => :header, required: true
 
-      parameter name: :last_updated_at, in: :query, type: :datetime, description: "Used to polling API for the last workouts, pass the last created_at persisted with API in local storage", required: false
+      parameter name: :last_updated_at, in: :query, type: :string, description: "Used to polling API for the last workouts, pass the last created_at persisted with API in local storage", required: false
 
       response "200", "Workouts returned successfully" do
         run_test! do |response|
@@ -62,7 +62,7 @@ RSpec.describe "workouts", type: :request do
             required: true,
           },
           workout_at: {
-            type: :datetime,
+            type: :string,
             description: "The datetime that workout begins",
             example: "2021-10-01 20:00:00",
             required: true,
@@ -143,7 +143,7 @@ RSpec.describe "workouts", type: :request do
             required: true,
           },
           workout_at: {
-            type: :datetime,
+            type: :string,
             description: "The datetime that workout begins",
             example: "2021-10-01 20:00:00",
             required: true,
