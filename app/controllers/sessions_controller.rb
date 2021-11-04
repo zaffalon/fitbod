@@ -1,4 +1,4 @@
-class SessionsController < ApiController
+class SessionsController < ApplicationController
   before_action :authenticate, only: :destroy
 
   def create

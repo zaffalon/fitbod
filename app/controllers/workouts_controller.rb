@@ -1,4 +1,4 @@
-class WorkoutsController < ApiController
+class WorkoutsController < ApplicationController
   before_action :authenticate
   load_and_authorize_resource(class: Workout, id_param: :id, instance_name: :workout)
 

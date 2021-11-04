@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UsersController < ApiController
+class UsersController < ApplicationController
     before_action :authenticate, except: [:create]
     load_and_authorize_resource(class: User, id_param: :id, instance_name: :user, except: [:create])
   

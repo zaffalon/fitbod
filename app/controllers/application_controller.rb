@@ -1,4 +1,4 @@
-class ApiController < ActionController::API
+class ApplicationController < ActionController::API
 
   private def api_key_from_header
     bearer_pattern = /^Bearer /
