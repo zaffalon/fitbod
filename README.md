@@ -72,3 +72,37 @@ You can open on the browser the test coverage report:
 coverage/index.html
 ```
 
+# Kubernetes (Minikube)
+
+
+Command to build docker image inside minikube
+```
+eval $(minikube docker-env)
+```
+
+Build the image inside minikube
+```
+docker build . -t fitbod-api
+```
+
+Apply kubernetes configurations
+```
+kubectl apply -f k8s/config 
+```
+
+Create the database
+```
+kubectl apply -f k8s/scripts/rails-create.yml
+```
+
+Migrate the database
+```
+kubectl apply -f k8s/scripts/rails-migrate.yml
+```
+
+Run minikube tunnel to see the endpoint
+```
+minikube tunnel
+```
+
+Visit: http://localhost/api-docs/index.html to go directly to the documentation of the api.

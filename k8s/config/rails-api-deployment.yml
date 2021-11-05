@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rails-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rails-api
+  template:
+    metadata:
+      labels:
+        app: rails-api
+    spec:
+      containers:
+      - name: rails-api
+        image: fitbod-api
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        env:                     # Environment variables passed to the container
+        - name: RAILS_ENV
+          value: production
+        - name: SECRET_KEY_BASE
+          value: 8551da629c00262fd6f39f20e76861a9e94f29433a8c8c28202c7d5bb4e234c0711d77a383f5658c686745d24ae1f26172c1f9f50da6b2b91accd08bd0b4d855

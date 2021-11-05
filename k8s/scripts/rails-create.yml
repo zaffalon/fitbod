@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-db
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: create-db
+          image: fitbod-api
+          imagePullPolicy: Never
+          command: ['rails']
+          args: ['db:create']
+          env:                     # Environment variables passed to the container
+          - name: RAILS_ENV
+            value: production
