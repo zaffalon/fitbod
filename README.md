@@ -75,12 +75,22 @@ coverage/index.html
 # Kubernetes (Minikube)
 
 
+Run the minikube
+```
+minikube start
+```
+
+Add the nginx-ingress
+```
+minikube addons enable ingress
+```
+
 Command to build docker image inside minikube
 ```
 eval $(minikube docker-env)
 ```
 
-Build the image inside minikube
+Build the image inside the project folder
 ```
 docker build . -t fitbod-api
 ```
