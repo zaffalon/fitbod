@@ -145,8 +145,15 @@ paths:
       - name: last_updated_at
         in: query
         type: string
+        example: '2021-10-01 20:00:00'
         description: Used to polling API for the last workouts, pass the last created_at
-          persisted with API in local storage
+          persisted in API and updated in the device storage
+        required: false
+      - name: page
+        in: query
+        type: integer
+        example: 1
+        description: Page number you are searching
         required: false
       responses:
         '200':

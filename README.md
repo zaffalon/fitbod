@@ -2,6 +2,28 @@
 
 API for manage workouts from users using Ruby on Rails 6 and PostgreSql.
 
+For synchronization with multiple devices, we can check for the last persisted workout in the device storage, and search in the API for the workouts after that time (created_at).
+
+Get the last created_at and use this data to send it as a param like last_updated_at = last_workout.created_at.
+
+For the correct synchronization, we can't persist in the device storage response after a record creation so we need to call the workout index URL with the last considered persisted date to receive all the records created after the last persistence.
+
+```
+Device 1 | Device 2 | Device 3 | Device 4 |        P is equal Persisted, Using just time for a simple example
+01:00 P    01:00 P     01:00 P   01:00 P
+02:00 P    02:00 P               04:00
+03:00 p
+```
+Device 4 sent to API the request to persist the workout with time 04:00 then receive the return of this with the ID and not mark this as persisted. Now Device 4 calls the workout index with the last persisted date (last_updated_at = 01:00) and receive all the records after this date being able to persist the results.
+```
+Device 1 | Device 2 | Device 3 | Device 4 |
+01:00 P    01:00 P     01:00 P   01:00 P
+02:00 P    02:00 P               02:00 P
+03:00 P                          03:00 P
+                                 04:00 P
+```
+This way all the other devices can do the same and become synchronized.
+
 ### Requirements
 
 You can run this project using docker-compose. The guide below will be for using docker-compose.

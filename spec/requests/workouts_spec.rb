@@ -14,7 +14,8 @@ RSpec.describe "workouts", type: :request do
       security [JWT: []]
       parameter name: "Content-Type", default: "application/json", :in => :header, required: true
 
-      parameter name: :last_updated_at, in: :query, type: :string, description: "Used to polling API for the last workouts, pass the last created_at persisted with API in local storage", required: false
+      parameter name: :last_updated_at, in: :query, type: :string, example: "2021-10-01 20:00:00", description: "Used to polling API for the last workouts, pass the last created_at persisted in API and updated in the device storage", required: false
+      parameter name: :page, in: :query, type: :integer, example: 1, description: "Page number you are searching", required: false
 
       response "200", "Workouts returned successfully" do
         run_test! do |response|

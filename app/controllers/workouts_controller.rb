@@ -12,7 +12,10 @@ class WorkoutsController < ApplicationController
 
   def index
     @workouts = @workouts.where("created_at >= :last_updated_at", last_updated_at: params[:last_updated_at]) if params[:last_updated_at]
-    render json: WorkoutSerializer.new(@workouts)
+    @workouts = @workouts.page(params[:page])
+    options = {}
+    options[:meta] = { page: @workouts.page(params[:page]).current_page, total: @workouts.page(params[:page]).count }
+    render json: WorkoutSerializer.new(@workouts, options)
   end
 
   def show
